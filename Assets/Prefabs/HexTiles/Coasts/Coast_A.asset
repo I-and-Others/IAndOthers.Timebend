@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948efe144e76ba24cb22563d16e0255f, type: 3}
+  m_Name: Coast_A
+  m_EditorClassIdentifier: 
+  tileSetName: Coast_A
+  hexPrefab: {fileID: 7045416920354493916, guid: 8812812d841df3e4b9e1fda36b883cb9,
+    type: 3}
+  rotationDegree: 0
+  east: 1
+  southEast: 1
+  southWest: 1
+  west: 4
+  northWest: 5
+  northEast: 4

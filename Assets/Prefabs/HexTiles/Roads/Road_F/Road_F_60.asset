@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948efe144e76ba24cb22563d16e0255f, type: 3}
+  m_Name: Road_F_60
+  m_EditorClassIdentifier: 
+  tileSetName: Road_F_60
+  hexPrefab: {fileID: 13677923137521774, guid: dabee5f4463bcd74fb5ba475e7485e2c, type: 3}
+  rotationDegree: 60
+  east: 1
+  southEast: 2
+  southWest: 1
+  west: 1
+  northWest: 2
+  northEast: 2

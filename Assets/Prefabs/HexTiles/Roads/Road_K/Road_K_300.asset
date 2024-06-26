@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948efe144e76ba24cb22563d16e0255f, type: 3}
+  m_Name: Road_K_300
+  m_EditorClassIdentifier: 
+  tileSetName: Road_K_300
+  hexPrefab: {fileID: 1707960084275710638, guid: 54a092aaf50ec7b42b95aef6ed5f658f,
+    type: 3}
+  rotationDegree: 300
+  east: 0
+  southEast: 0
+  southWest: 0
+  west: 0
+  northWest: 0
+  northEast: 0
