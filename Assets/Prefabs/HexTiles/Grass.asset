@@ -15,9 +15,10 @@ MonoBehaviour:
   tileSetName: RoadGrass
   hexPrefab: {fileID: 5434157206522577229, guid: ab5c434d9d9b5064886dc79df7bdff41,
     type: 3}
-  east: 1
-  southEast: 1
-  southWest: 1
-  west: 1
-  northWest: 1
-  northEast: 1
+  rotationDegree: 0
+  east: 01000000
+  southEast: 01000000
+  southWest: 01000000
+  west: 01000000
+  northWest: 01000000
+  northEast: 01000000

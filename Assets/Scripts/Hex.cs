@@ -11,6 +11,7 @@ public class Hex : MonoBehaviour
     public HexRotationEnum currentRotation;
     [SerializeField]
     public List<PossibleTileSet> possibleTileSets = new List<PossibleTileSet>();
+    public HexTypeEnum hexType;
 
     public void Initialize(Vector2Int coords)
     {
@@ -25,9 +26,10 @@ public class Hex : MonoBehaviour
         return new Vector2Int(q, r);
     }
 
-    public void SetTileSet(TileSet tileSet)
+    public void SetTileSet(TileSet tileSet, HexRotationEnum rotation)
     {
         currentTileSet = tileSet;
+        currentRotation = rotation;
 
         // Set the mesh filter of the hex to the selected tile set's mesh
         MeshFilter meshFilter = GetComponent<MeshFilter>();
@@ -40,12 +42,22 @@ public class Hex : MonoBehaviour
             }
         }
 
-        // Set the rotation of the hex to the selected tile set's rotation
-        var hexRotation = tileSet.rotationDegree;
-        currentRotation = hexRotation;
-        transform.rotation = Quaternion.Euler(0, (int)hexRotation, 0);
+        // Set the rotation of the hex
+        transform.rotation = Quaternion.Euler(0, (int)rotation, 0);
 
-        possibleTileSets.Clear();
+        // Set the type of hex based on the tile set
+        if (tileSet.tileSetName.Contains("Coastal"))
+        {
+            hexType = HexTypeEnum.Coastal;
+        }
+        else if (tileSet.tileSetName.Contains("Road"))
+        {
+            hexType = HexTypeEnum.Road;
+        }
+        else if (tileSet.tileSetName.Contains("Water"))
+        {
+            hexType = HexTypeEnum.Water;
+        }
     }
 
     private void OnDrawGizmos()

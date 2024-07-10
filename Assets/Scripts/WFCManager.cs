@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WFCManager : MonoBehaviour
@@ -137,22 +138,7 @@ public class WFCManager : MonoBehaviour
         TileSet selectedTile = selectedTileSet.tileSet;
         HexRotationEnum selectedRotation = selectedTileSet.possibleRotations[Random.Range(0, selectedTileSet.possibleRotations.Count)];
 
-        hex.currentTileSet = selectedTile;
-        hex.currentRotation = selectedRotation;
-
-        // Set the mesh filter of the hex to the selected tile set's mesh
-        MeshFilter meshFilter = hex.GetComponent<MeshFilter>();
-        if (meshFilter != null && selectedTile.hexPrefab != null)
-        {
-            MeshFilter prefabMeshFilter = selectedTile.hexPrefab.GetComponent<MeshFilter>();
-            if (prefabMeshFilter != null)
-            {
-                meshFilter.mesh = prefabMeshFilter.sharedMesh;
-            }
-        }
-        // Set the rotation of the hex to the selected rotation
-        hex.transform.rotation = Quaternion.Euler(0, (int)selectedRotation, 0);
-
+        hex.SetTileSet(selectedTile, selectedRotation);
         hex.possibleTileSets.Clear();
     }
 
@@ -181,40 +167,41 @@ public class WFCManager : MonoBehaviour
                     continue;
                 }
 
-                HexDirectionConnectionTypeEnum requiredFaceType = currentHex.currentTileSet.GetFaceType(direction, currentHex.currentRotation);
+                ApplyConstraints(currentHex, neighbor, direction, oppositeDirection, propagationQueue);
+            }
+        }
+    }
 
-                List<PossibleTileSet> validTileSets = new List<PossibleTileSet>();
-                foreach (var possibleTileSet in neighbor.possibleTileSets)
+    private void ApplyConstraints(Hex currentHex, Hex neighbor, HexMainDirectionEnum direction, HexMainDirectionEnum oppositeDirection, Queue<Hex> propagationQueue)
+    {
+        List<PossibleTileSet> validTileSets = new List<PossibleTileSet>();
+        foreach (var possibleTileSet in neighbor.possibleTileSets)
+        {
+            List<HexRotationEnum> validRotations = new List<HexRotationEnum>();
+            foreach (var rotation in possibleTileSet.possibleRotations)
+            {
+                if (currentHex.currentTileSet.CanConnect(possibleTileSet.tileSet, direction, currentHex.currentRotation, oppositeDirection, rotation))
                 {
-                    List<HexRotationEnum> validRotations = new List<HexRotationEnum>();
-                    foreach (var rotation in possibleTileSet.possibleRotations)
-                    {
-                        var faceType = possibleTileSet.tileSet.GetFaceType(oppositeDirection, rotation);
-
-                        if (requiredFaceType == faceType)
-                        {
-                            validRotations.Add(rotation);
-                        }
-                    }
-
-                    if (validRotations.Count > 0)
-                    {
-                        validTileSets.Add(new PossibleTileSet(possibleTileSet.tileSet, validRotations));
-                    }
-                }
-
-                if (!AreTileSetsEqual(neighbor.possibleTileSets, validTileSets))
-                {
-                    neighbor.possibleTileSets = validTileSets;
-                    propagationQueue.Enqueue(neighbor);
-                }
-
-                if (validTileSets.Count == 1)
-                {
-                    Collapse(neighbor);
-                    propagationQueue.Enqueue(neighbor);
+                    validRotations.Add(rotation);
                 }
             }
+
+            if (validRotations.Count > 0)
+            {
+                validTileSets.Add(new PossibleTileSet(possibleTileSet.tileSet, validRotations));
+            }
+        }
+
+        if (!AreTileSetsEqual(neighbor.possibleTileSets, validTileSets))
+        {
+            neighbor.possibleTileSets = validTileSets;
+            propagationQueue.Enqueue(neighbor);
+        }
+
+        if (validTileSets.Count == 1)
+        {
+            Collapse(neighbor);
+            propagationQueue.Enqueue(neighbor);
         }
     }
 
@@ -235,51 +222,6 @@ public class WFCManager : MonoBehaviour
         }
 
         return true;
-    }
-
-    public void CollapseOuterHexagonsAsWater()
-    {
-        if (!initialized)
-        {
-            Debug.LogError("Wave Function Collapse has not been initialized. Call StartWaveFunctionCollapse first.");
-            return;
-        }
-
-        TileSet waterTileSet = null;
-
-        // Find the water tile set
-        foreach (var tileSet in tileSets)
-        {
-            if (tileSet.tileSetName == "Coast_Water") // Adjust the name as necessary
-            {
-                waterTileSet = tileSet;
-                break;
-            }
-        }
-
-        if (waterTileSet == null)
-        {
-            Debug.LogError("Water tile set not found.");
-            return;
-        }
-
-        int width = hexMapGenerator.hexGrid.GetLength(0);
-        int height = hexMapGenerator.hexGrid.GetLength(1);
-
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                if (IsEdgeHexagon(x, y, width, height))
-                {
-                    Hex hex = hexMapGenerator.hexGrid[x, y];
-                    if (hex.currentTileSet == null)
-                    { 
-                        hex.SetTileSet(waterTileSet);
-                    }
-                }
-            }
-        }
     }
 
     private bool IsEdgeHexagon(int x, int y, int width, int height)

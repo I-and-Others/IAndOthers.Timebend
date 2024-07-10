@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 948efe144e76ba24cb22563d16e0255f, type: 3}
-  m_Name: Road_C_0
+  m_Name: Road_I_0
   m_EditorClassIdentifier: 
-  tileSetName: Road_C_0
-  hexPrefab: {fileID: 1918300861571455272, guid: 2ff8061562b54ff43977a7d2952066b8,
+  tileSetName: Road_I_0
+  hexPrefab: {fileID: 2605254084198611085, guid: 89de7088980062140952d0620b6bfe13,
     type: 3}
   rotationDegree: 0
-  east: 2
-  southEast: 2
-  southWest: 1
-  west: 1
-  northWest: 1
-  northEast: 1
+  east: 01000000
+  southEast: 02000000
+  southWest: 02000000
+  west: 01000000
+  northWest: 02000000
+  northEast: 02000000

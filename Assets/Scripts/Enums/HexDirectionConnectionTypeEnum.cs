@@ -3,9 +3,10 @@
 public enum HexDirectionConnectionTypeEnum : int
 {
     None,
-    Grass,
+    Land,
     Road,
     River,
-    Coast,
-    Water
+    Water,
+    CoastalWater,
+    CoastalLand
 }

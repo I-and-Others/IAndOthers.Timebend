@@ -14,10 +14,6 @@ public class WFCManagerEditor : Editor
             wfcManager.StartWaveFunctionCollapse();
         }
 
-        if (GUILayout.Button("Collapse Outer Hexagons as Water"))
-        {
-            wfcManager.CollapseOuterHexagonsAsWater();
-        }
 
         if (GUILayout.Button("Collapse Next"))
         {

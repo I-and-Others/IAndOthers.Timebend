@@ -16,9 +16,9 @@ MonoBehaviour:
   hexPrefab: {fileID: 7325128486184793883, guid: e0496099cd97c1a4cbf791bb1e81a767,
     type: 3}
   rotationDegree: 0
-  east: 4
-  southEast: 1
-  southWest: 1
-  west: 4
-  northWest: 5
-  northEast: 5
+  east: 05000000
+  southEast: 01000000
+  southWest: 01000000
+  west: 05000000
+  northWest: 04000000
+  northEast: 04000000
